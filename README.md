@@ -1,4 +1,4 @@
-# 📰 Arabic News Classifier & Summarizer (TF‑IDF + Logistic Regression + Groq LLM)
+# Arabic News Classifier & Summarizer (TF‑IDF + Logistic Regression + Groq LLM)
 
 Welcome to our final project for **EMAI 641: Deep Learning**.
 
@@ -12,7 +12,7 @@ The project uses **Allam‑2‑7B** through **Groq API** exclusively for generat
 
 ---
 
-## 📚 Project Description
+## Project Description
 
 We developed an end-to-end Arabic news classification and summarization system using a hybrid of:
 
@@ -30,15 +30,15 @@ This project demonstrates practical applications of NLP in the Arabic domain, in
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🔎 **Classification Features**
+### **Classification Features**
 - Accurate classification of Arabic news articles into **7 major categories**
 - Categories: *Finance, Sports, Medical, Technology, Politics, Religion, Culture*
 - Built using TF‑IDF vectorization + Logistic Regression  
 - Fast inference suitable for real-time applications  
 
-### 🧠 **Generative Features (via Allam LLM)**
+### **Generative Features (via Allam LLM)**
 - Smart summarization of the provided article
 - Generating an Arabic headline that is:
   - Short  
@@ -46,7 +46,7 @@ This project demonstrates practical applications of NLP in the Arabic domain, in
   - Engaging  
 - Seamless integration with Groq API
 
-### 🖥️ **User Interface**
+### **User Interface**
 - Fully RTL (Right-to-Left) Arabic interface  
 - Built with Streamlit  
 - Clean, modern, and responsive design  
@@ -54,7 +54,7 @@ This project demonstrates practical applications of NLP in the Arabic domain, in
 
 ---
 
-## 🧰 Technologies Used
+## Technologies Used
 
 | Category | Technologies |
 |---------|--------------|
@@ -69,7 +69,7 @@ This project demonstrates practical applications of NLP in the Arabic domain, in
 
 ---
 
-## 📊 Dataset Details
+## Dataset Details
 
 - **Dataset Name:** SANAD Dataset  
 - **Language:** Arabic  
@@ -78,7 +78,7 @@ This project demonstrates practical applications of NLP in the Arabic domain, in
 - **Dataset Link:**  
   https://www.kaggle.com/datasets/haithemhermessi/sanad-dataset  
 
-### 🔧 Preprocessing Steps
+### Preprocessing Steps
 
 - Removing Arabic diacritics (Tashkeel)  
 - Eliminating non-Arabic characters and punctuation  
@@ -91,51 +91,35 @@ This project demonstrates practical applications of NLP in the Arabic domain, in
 
 ---
 
-## ⚙️ System Workflow
+## System Workflow
 
-### 1️⃣ User Input  
+### 1. User Input  
 User pastes or enters an Arabic news article.
 
-### 2️⃣ Text Preprocessing  
+### 2. Text Preprocessing  
 Clean and normalize the Arabic text using custom preprocessing functions.
 
-### 3️⃣ ML Classification  
+### 3. ML Classification  
 - Apply TF‑IDF vectorization  
 - Predict using Logistic Regression  
 - Return top predicted category  
 
-### 4️⃣ Generative AI Processing  
+### 4. Generative AI Processing  
 Send the original article to **Allam‑2‑7B** for:  
 - Article summarization  
 - Smart Arabic headline suggestion  
 
-### 5️⃣ Display Output  
+### 5. Display Output  
 - Classification result  
 - Summary  
 - Proposed title  
-All displayed in a clean **Arabic RTL Streamlit interface**
 
 ---
 
-## 🚀 Live Deployment
+## Live Deployment
 
 | Platform | Link |
 |---------|------|
-| 📘 Google Colab (Training + EDA) | https://colab.research.google.com/drive/1tRoS5dUuBz7TnJMy-BrrV7b89i2RJCCa#scrollTo=wwsDMrtm_mmt |
+| 📘 Google Colab (Training + EDA) | https://colab.research.google.com/drive/1tRoS5dUuBz7TnJMy-BrrV7b89i2RJCCa?usp=sharing |
 | 🌐 Streamlit App | https://dl-news-classification.streamlit.app/ |
 | 💻 GitHub Repository | https://github.com/Muhannadam/Multi-Class-Arabic-News-Classification/blob/main/README.md |
-
----
-
-## 📌 How to Run Locally
-
-```bash
-# Clone the repository
-git clone https://github.com/your-username/arabic-news-classifier.git
-cd arabic-news-classifier
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the Streamlit app
-streamlit run app.py
