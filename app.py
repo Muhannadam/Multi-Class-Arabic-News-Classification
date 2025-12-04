@@ -14,7 +14,7 @@ model = joblib.load('baseline_lr_model.pkl')
 vectorizer = joblib.load('tfidf_vectorizer.pkl')
 label_encoder = joblib.load('label_encoder.pkl')
 
-# Load Arabic stopwords
+# Download Arabic stopwords if not present
 try:
     stopwords.words('arabic')
 except LookupError:
@@ -22,7 +22,7 @@ except LookupError:
 
 arabic_stopwords = set(stopwords.words('arabic'))
 
-# Arabic text preprocessing function
+# Clean Arabic text: remove diacritics, numbers, symbols, and stopwords
 def clean_text(text):
     def remove_tashkeel(t): return re.sub(r'[\u0617-\u061A\u064B-\u0652]', '', t)
     def remove_repeated_chars(t): return re.sub(r'(.)\1{2,}', r'\1\1', t)
@@ -35,7 +35,7 @@ def clean_text(text):
     tokens = [w for w in text.split() if w not in arabic_stopwords and len(w) > 1]
     return ' '.join(tokens)
 
-# Groq summarization + title suggestion function
+# Call Groq API to summarize and suggest a title
 def summarize_and_suggest_title(text):
     url = "https://api.groq.com/openai/v1/chat/completions"
     headers = {
@@ -46,7 +46,7 @@ def summarize_and_suggest_title(text):
         "model": "allam-2-7b",
         "messages": [
             {"role": "system", "content": "أنت مساعد ذكي. عندما يصلك نص طويل، قم باقتراح عنوانًا قصيرًا وجذابًا باللغة العربية ثم بتلخيصه بشكل مختصر"},
-            {"role": "user", "content": f"هذا هو نص المقال:\n\n{text}\n\nرجاءً: 1- اقترح عنوانًا ذكيًا للمقال 2- لخص المقال في فقرة قصيرة."}
+            {"role": "user", "content": f"هذا هو نص المقال:\n\n{text}\n\nرجاءً: 1- اقترح عنوانًا ذكيًا للمقال 2- لخص المقال في فقرة قصيرة ."}
         ],
         "temperature": 0.5,
         "max_tokens": 500
@@ -60,67 +60,52 @@ def summarize_and_suggest_title(text):
     except Exception as e:
         return f"❌ خطأ أثناء التلخيص: {str(e)}"
 
-# Set page to RTL and Arabic font using HTML injection
-st.markdown(
-    """
+# Apply right-to-left layout using HTML
+st.markdown("""
     <style>
-    body {
-        direction: RTL;
-        text-align: right;
-        font-family: 'Arial', sans-serif;
-    }
-    .stTextArea textarea {
-        direction: RTL;
+    body, .stTextArea, .stTextInput, .stMarkdown, .stButton, .stSelectbox {
+        direction: rtl;
         text-align: right;
     }
     </style>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
-# Sidebar navigation
-page = st.sidebar.selectbox("انتقل إلى:", ["📄 الصفحة الرئيسية", "ℹ️ حول المشروع"])
+# Define tab structure
+tabs = st.tabs(["📰 الواجهة الرئيسية", "ℹ️ حول المشروع"])
 
-# Main Page: Classification
-if page == "📄 الصفحة الرئيسية":
-    st.title("🔎 مصنف الأخبار العربية")
-    st.markdown("**هذا النموذج يقوم بتصنيف المقالات العربية إلى فئات إخبارية، ويقترح عنوانًا ذكيًا ويقدم تلخيصًا موجزًا باستخدام تقنية Groq AI.**")
+# Tab 1: Main Interface
+with tabs[0]:
+    st.title("🔎 نظام تصنيف الأخبار العربية")
 
-    input_text = st.text_area("✍️ أدخل المقال أو النص الإخباري هنا:", height=200)
+    input_text = st.text_area("✍️ أدخل المقال أو النص الإخباري هنا", height=200)
 
     if st.button("🔍 تصنيف المقال"):
         if input_text.strip() == "":
-            st.warning("⚠️ الرجاء إدخال نص.")
+            st.warning("الرجاء إدخال نص.")
         else:
-            # Preprocess + predict
+            # Clean and classify input text
             cleaned = clean_text(input_text)
             tfidf_input = vectorizer.transform([cleaned])
             pred = model.predict(tfidf_input)
             label = label_encoder.inverse_transform(pred)[0]
             st.success(f"✅ الفئة المتوقعة: **{label}**")
 
-            # Summarization + title suggestion
-            with st.spinner("✍️ جاري التلخيص واقتراح العنوان..."):
+            # Summarize and suggest title via Groq API
+            with st.spinner("✍️ جاري تلخيص الخبر واقتراح عنوان..."):
                 summary_output = summarize_and_suggest_title(input_text)
-                st.subheader("📝 التلخيص والعنوان المقترح:")
+                st.subheader("📝 تلخيص وعنوان مقترح:")
                 st.markdown(summary_output)
 
-# About Page
-elif page == "ℹ️ حول المشروع":
-    st.title("ℹ️ معلومات عن المشروع")
+# Tab 2: Project Info
+with tabs[1]:
+    st.title("ℹ️ حول المشروع")
     st.markdown("""
-    هذا المشروع هو نظام تصنيف ذكي للمقالات الإخبارية العربية، يعتمد على نموذج **Logistic Regression** مدرب باستخدام بيانات **SANAD Dataset**.
-    
-    المزايا:
-    - تصنيف المقالات إلى فئات مثل السياسة، الرياضة، الصحة، الدين، وغيرها.
-    - تلخيص المقال تلقائيًا واقتراح عنوان ذكي باستخدام نموذج **Allam-2-7B** من منصة **Groq**.
-    - واجهة تفاعلية مبنية باستخدام **Streamlit**.
+    هذا المشروع يهدف إلى تصنيف المقالات الإخبارية العربية إلى فئات متعددة مثل السياسة، الرياضة، الطب، وغيرها باستخدام نموذج Logistic Regression مدرب على مجموعة بيانات SANAD.
 
-    التقنية المستخدمة:
-    - Python (scikit-learn, joblib, NLTK)
-    - Groq API (Allam-2-7B)
-    - Streamlit
-    - GitHub + Streamlit Cloud
+    بعد تصنيف المقال، يتم تلخيصه واقتراح عنوان مناسب باستخدام نموذج اللغة Allam-2-7B عبر واجهة Groq API.
 
-    📌 هذا المشروع يهدف إلى تعزيز معالجة اللغة العربية باستخدام تقنيات حديثة في الذكاء الاصطناعي.
+    ### المزايا:
+    - يعتمد على تمثيل TF-IDF الفعال للنصوص العربية.
+    - يدعم التلخيص التلقائي والعناوين الذكية باستخدام نماذج كبيرة (LLMs).
+    - واجهة تفاعلية بالكامل مبنية باستخدام Streamlit.
     """)
