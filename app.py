@@ -14,7 +14,7 @@ model = joblib.load('baseline_lr_model.pkl')
 vectorizer = joblib.load('tfidf_vectorizer.pkl')
 label_encoder = joblib.load('label_encoder.pkl')
 
-# Download Arabic stopwords if not present
+# Download Arabic stopwords
 try:
     stopwords.words('arabic')
 except LookupError:
@@ -56,9 +56,9 @@ def summarize_and_suggest_title(text):
         if response.status_code == 200:
             return response.json()["choices"][0]["message"]["content"].strip()
         else:
-            return f"❌ خطأ في الاتصال: {response.status_code} - {response.text}"
+            return f"خطأ في الاتصال: {response.status_code} - {response.text}"
     except Exception as e:
-        return f"❌ خطأ أثناء التلخيص: {str(e)}"
+        return f"خطأ أثناء التلخيص: {str(e)}"
 
 # Apply right-to-left layout using HTML
 st.markdown("""
@@ -71,15 +71,15 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Define tab structure
-tabs = st.tabs(["📰 الواجهة الرئيسية", "ℹ️ حول المشروع"])
+tabs = st.tabs(["الواجهة الرئيسية", "حول المشروع"])
 
 # Tab 1: Main Interface
 with tabs[0]:
-    st.title("🔎 نظام تصنيف الأخبار العربية")
+    st.title("نظام تصنيف الأخبار العربيه باستخدام تعلم الآله")
 
-    input_text = st.text_area("✍️ أدخل المقال أو النص الإخباري هنا", height=200)
+    input_text = st.text_area("أدخل المقال أو النص الإخباري هنا", height=200)
 
-    if st.button("🔍 تصنيف المقال"):
+    if st.button("تصنيف المقال"):
         if input_text.strip() == "":
             st.warning("الرجاء إدخال نص.")
         else:
@@ -88,17 +88,17 @@ with tabs[0]:
             tfidf_input = vectorizer.transform([cleaned])
             pred = model.predict(tfidf_input)
             label = label_encoder.inverse_transform(pred)[0]
-            st.success(f"✅ الفئة المتوقعة: **{label}**")
+            st.success(f"الفئة المتوقعة: **{label}**")
 
             # Summarize and suggest title via Groq API
-            with st.spinner("✍️ جاري تلخيص الخبر واقتراح عنوان..."):
+            with st.spinner("جاري تلخيص الخبر واقتراح عنوان..."):
                 summary_output = summarize_and_suggest_title(input_text)
-                st.subheader("📝 تلخيص وعنوان مقترح:")
+                st.subheader("تلخيص وعنوان مقترح:")
                 st.markdown(summary_output)
 
 # Tab 2: Project Info
 with tabs[1]:
-    st.title("ℹ️ حول المشروع")
+    st.title("حول المشروع")
     st.markdown("""
     هذا المشروع يهدف إلى تصنيف المقالات الإخبارية العربية إلى فئات متعددة مثل السياسة، الرياضة، الطب، وغيرها باستخدام نموذج Logistic Regression مدرب على مجموعة بيانات SANAD.
 
@@ -108,7 +108,10 @@ with tabs[1]:
      يعتمد على تمثيل TF-IDF الفعال للنصوص العربية.
      يدعم التلخيص التلقائي والعناوين الذكية باستخدام نماذج كبيرة (LLMs).
      واجهة تفاعلية بالكامل مبنية باستخدام Streamlit.
-    """)
+
+     ### تطوير: مهند المنتشري
+     لماده التعلم العميق
+     """)
 # ======== Footer ========
 st.markdown("---")
 st.caption("  DL مشروع مقدم لمقرر EMAI 641")
