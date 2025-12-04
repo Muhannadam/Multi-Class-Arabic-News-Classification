@@ -1,6 +1,6 @@
 # 📰 Arabic News Classifier & Summarizer (TF‑IDF + Logistic Regression + Groq LLM)
 
-Welcome to our final project for **EMAI 631: Natural Language Processing**.
+Welcome to our final project for **EMAI 641: Deep Learning**.
 
 This project showcases an integrated NLP system capable of:
 
