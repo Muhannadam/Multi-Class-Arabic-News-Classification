@@ -9,6 +9,12 @@ vectorizer = joblib.load('tfidf_vectorizer.pkl')
 label_encoder = joblib.load('label_encoder.pkl')
 
 # إعداد الكلمات التوقفية
+import nltk
+try:
+    stopwords.words('arabic')
+except LookupError:
+    nltk.download('stopwords')
+
 arabic_stopwords = set(stopwords.words('arabic'))
 
 # دالة تنظيف النص العربي
