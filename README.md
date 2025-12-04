@@ -125,7 +125,7 @@ Send the original article to **Allam‑2‑7B** for:
 | GitHub Repository | https://github.com/Muhannadam/Multi-Class-Arabic-News-Classification/blob/main/README.md |
 
 ---
-## Developed By
+## Developed By:
 
 - Muhannad Almuntashiri
 - Gaith Alhumaidi
