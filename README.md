@@ -1,65 +1,141 @@
-# 📰 Arabic News Classifier with Smart Summarization (TF‑IDF + Groq LLM)
+# 📰 Arabic News Classifier & Summarizer (TF‑IDF + Logistic Regression + Groq LLM)
 
-🚀 A lightweight, intelligent web app that classifies Arabic news articles and generates smart summaries and headlines using a hybrid of classical ML and cutting-edge LLMs.
+Welcome to our final project for **EMAI 631: Natural Language Processing**.
 
-## 📌 Overview
+This project showcases an integrated NLP system capable of:
 
-This Streamlit-based app allows users to paste Arabic news text and instantly:
+- Classifying Arabic news articles into predefined categories  
+- Generating intelligent summaries  
+- Suggesting concise and meaningful Arabic headlines  
 
-✅ Classify the article into one of several categories (Politics, Sports, Religion, Tech, etc.)  
-✅ Generate a concise **summary** and a **catchy headline** in Arabic using the [Allam‑2‑7B](https://groq.com) model via Groq API
-
----
-
-## 🎯 Use Case
-
-This project serves as a prototype for **automated content understanding** and **headline generation** in Arabic—ideal for:
-
-- Media monitoring systems  
-- Arabic news portals  
-- NLP research in Arabic  
-- Educational projects in AI & Data Science
+The project uses **Allam‑2‑7B** through **Groq API** exclusively for generative tasks (summarization + title suggestion), while classification relies on classical ML models.
 
 ---
 
-## 🛠️ Tech Stack
+## 📚 Project Description
 
-| Component              | Details                               |
-|------------------------|----------------------------------------|
-| **Model**              | Logistic Regression (Scikit-learn)     |
-| **Text Vectorization** | TF-IDF (10k max features)              |
-| **LLM API**            | Allam‑2‑7B via Groq API (chat format)  |
-| **Interface**          | Streamlit (with RTL layout for Arabic) |
-| **Data**               | SANAD Arabic News Dataset              |
-| **Language**           | Full Arabic Support 🇸🇦                 |
+We developed an end-to-end Arabic news classification and summarization system using a hybrid of:
 
----
+- **Classical Machine Learning** (TF‑IDF + Logistic Regression)
+- **Generative AI** (Allam model via Groq API)
 
-## ✨ Features
+The system is fully optimized for **Arabic language processing**, supports **RTL layout**, and provides fast, accurate, and production-ready performance.
 
-- 🧠 **Classical ML + LLM hybrid**: Fast classification using trained Logistic Regression + powerful summarization via Allam‑2‑7B
-- 🌍 **Arabic-native NLP pipeline**: Preprocessing, cleaning, and stopword removal in Arabic
-- 🧾 **Instant results**: Classification + summarization in real-time
-- 🖥️ **Streamlit web UI**: Right-to-left layout, bilingual comments, intuitive UX
-- 🔐 **API-ready design**: Easily extendable for production environments
+This project demonstrates practical applications of NLP in the Arabic domain, including:
+
+- News platform automation  
+- Content recommendation systems  
+- Media monitoring  
+- Journalism tools  
 
 ---
 
-## ⚙️ Setup & Deployment
+## ✨ Key Features
 
-### 🔧 Local Setup
+### 🔎 **Classification Features**
+- Accurate classification of Arabic news articles into **7 major categories**
+- Categories: *Finance, Sports, Medical, Technology, Politics, Religion, Culture*
+- Built using TF‑IDF vectorization + Logistic Regression  
+- Fast inference suitable for real-time applications  
+
+### 🧠 **Generative Features (via Allam LLM)**
+- Smart summarization of the provided article
+- Generating an Arabic headline that is:
+  - Short  
+  - Informative  
+  - Engaging  
+- Seamless integration with Groq API
+
+### 🖥️ **User Interface**
+- Fully RTL (Right-to-Left) Arabic interface  
+- Built with Streamlit  
+- Clean, modern, and responsive design  
+- Secure API key handling using Streamlit Secrets Management  
+
+---
+
+## 🧰 Technologies Used
+
+| Category | Technologies |
+|---------|--------------|
+| Programming Language | Python 3.10 |
+| Machine Learning | Logistic Regression (TF‑IDF) |
+| Generative AI | Allam‑2‑7B (Groq API) |
+| Web Framework | Streamlit |
+| Data Processing | Pandas, Regex, NLTK |
+| Model Persistence | Joblib |
+| Training & EDA | Google Colab |
+| API Communication | Requests Library |
+
+---
+
+## 📊 Dataset Details
+
+- **Dataset Name:** SANAD Dataset  
+- **Language:** Arabic  
+- **Samples:** ~45,500 articles  
+- **Categories:** Finance, Sports, Medical, Technology, Politics, Religion, Culture  
+- **Dataset Link:**  
+  https://www.kaggle.com/datasets/haithemhermessi/sanad-dataset  
+
+### 🔧 Preprocessing Steps
+
+- Removing Arabic diacritics (Tashkeel)  
+- Eliminating non-Arabic characters and punctuation  
+- Removing digits and symbols  
+- Normalizing the text  
+- Removing Arabic stopwords using NLTK  
+- Cleaning repeated characters  
+- Whitespace normalization  
+- Splitting data into **80% training / 20% testing**
+
+---
+
+## ⚙️ System Workflow
+
+### 1️⃣ User Input  
+User pastes or enters an Arabic news article.
+
+### 2️⃣ Text Preprocessing  
+Clean and normalize the Arabic text using custom preprocessing functions.
+
+### 3️⃣ ML Classification  
+- Apply TF‑IDF vectorization  
+- Predict using Logistic Regression  
+- Return top predicted category  
+
+### 4️⃣ Generative AI Processing  
+Send the original article to **Allam‑2‑7B** for:  
+- Article summarization  
+- Smart Arabic headline suggestion  
+
+### 5️⃣ Display Output  
+- Classification result  
+- Summary  
+- Proposed title  
+All displayed in a clean **Arabic RTL Streamlit interface**
+
+---
+
+## 🚀 Live Deployment
+
+| Platform | Link |
+|---------|------|
+| 📘 Google Colab (Training + EDA) | https://colab.research.google.com/drive/1tRoS5dUuBz7TnJMy-BrrV7b89i2RJCCa#scrollTo=wwsDMrtm_mmt |
+| 🌐 Streamlit App | https://dl-news-classification.streamlit.app/ |
+| 💻 GitHub Repository | https://github.com/Muhannadam/Multi-Class-Arabic-News-Classification/blob/main/README.md |
+
+---
+
+## 📌 How to Run Locally
 
 ```bash
-# 1. Clone the repository
+# Clone the repository
 git clone https://github.com/your-username/arabic-news-classifier.git
 cd arabic-news-classifier
 
-# 2. Create virtual environment (optional)
-python -m venv venv
-source venv/bin/activate
-
-# 3. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# 4. Run the app
+# Run the Streamlit app
 streamlit run app.py
