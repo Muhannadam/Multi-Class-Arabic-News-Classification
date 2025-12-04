@@ -123,3 +123,10 @@ Send the original article to **Allam‑2‑7B** for:
 | 📘 Google Colab (Training + EDA) | https://colab.research.google.com/drive/1tRoS5dUuBz7TnJMy-BrrV7b89i2RJCCa?usp=sharing |
 | 🌐 Streamlit App | https://dl-news-classification.streamlit.app/ |
 | 💻 GitHub Repository | https://github.com/Muhannadam/Multi-Class-Arabic-News-Classification/blob/main/README.md |
+
+---
+###Developed By
+
+- Muhannad Almuntashiri
+- Gaith Alhumaidi
+- Eyad Alzahrani
